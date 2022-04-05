@@ -1,0 +1,62 @@
+name: Unit Tests
+
+on: [push, pull_request]
+
+jobs:
+  teststyle:
+    name: Code lint and style 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8
+    - name: Check with flake8
+      run: |
+        flake8 satisfier/
+
+  teststyle:
+    name: Type annotation checking
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install mypy
+    - name: Check with flake8
+      run: |
+        mypy satisfier/
+
+  testlogic:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Update packages
+      run: sudo apt-get update
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+    - name: Run Pytest
+      run: python -m pytest -s -v
