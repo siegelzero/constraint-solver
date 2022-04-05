@@ -22,7 +22,7 @@ jobs:
       run: |
         flake8 satisfier/
 
-  teststyle:
+  testtypes:
     name: Type annotation checking
     runs-on: ubuntu-latest
 
