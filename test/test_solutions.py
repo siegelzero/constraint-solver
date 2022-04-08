@@ -1,23 +1,23 @@
-from satisfier.system import ConstraintSystem
-
-from satisfier import solutions
+from satisfier import all_solutions, ConstraintSystem
 
 
-def test_simple():
+def test_pythagorean_triple():
     C = ConstraintSystem()
     x = C.variable_set
 
     C.add_constraints([
-        x[0] + x[1] == 5,
-        x[0] > x[1],
-        x[0] >= 1,
+        x[0] < x[1],
+        x[0]**2 + x[1]**2 == x[2]**2
     ])
 
     for variable in C.variables:
-        C.set_domain(variable, range(10))
+        C.set_domain(variable, range(1, 6))
 
-    sols = list(solutions.enumerate(C))
-    assert len(sols) > 0
+    sols = list(all_solutions(C))
+    assert len(sols) == 1
+
+    solution = sols[0]
+    assert solution[0]**2 + solution[1]**2 == solution[2]**2
 
 
 def test_arithmetic():
@@ -33,7 +33,7 @@ def test_arithmetic():
     for variable in C.variables:
         C.set_domain(variable, range(10))
 
-    sols = list(solutions.enumerate(C))
+    sols = list(all_solutions(C))
     assert len(sols) == 3
 
 
@@ -64,7 +64,7 @@ def test_magic_square():
     for variable in C.variables:
         C.set_domain(variable, range(1, n**2 + 1))
 
-    sols = list(solutions.enumerate(C))
+    sols = list(all_solutions(C))
     assert len(sols) == 8
 
 
@@ -84,7 +84,7 @@ def test_nqueens():
     for i in range(n):
         C.set_domain(x[i], range(n))
 
-    sols = list(solutions.enumerate(C))
+    sols = list(all_solutions(C))
 
     assert len(sols) == 92
 
@@ -102,5 +102,5 @@ def test_latin_square():
         C.all_different(x[j] for j in range(i*n, (i + 1)*n))
         C.all_different(x[j] for j in range(i, n*n, n))
 
-    sols = list(solutions.enumerate(C))
+    sols = list(all_solutions(C))
     assert len(sols) == 576
