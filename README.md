@@ -42,7 +42,7 @@ search(C)
 
 Satisfier can be used to enumerate combinatorial structures.
 A *derangement* is a permutation that has no fixed points.
-We can count the derangements of the `n` symbols `0, 1, ..., n - 1` with `n = 10` as follows.
+We can enumerate the `44` derangements of the `5` symbols `0, 1, 2, 3, 4` as follows.
 ```python
 from satisfier.system import ConstraintSystem
 from satisfier.enumerative import solutions
@@ -50,7 +50,7 @@ from satisfier.enumerative import solutions
 C = ConstraintSystem()
 position = C.variable_set
 
-n = 10
+n = 5
 for i in range(n):
     C.set_domain(position[i], range(n))
 
@@ -59,5 +59,5 @@ for i in range(n):
 
 C.all_different(C.variables)
 
-sum(1 for _ in solutions(C))
+assert sum(1 for _ in solutions(C)) == 44
 ```
