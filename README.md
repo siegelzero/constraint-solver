@@ -20,11 +20,13 @@ pip install satisfier
 
 ### Example Usage
 
-Below is a system that has some small Pythagorean triples as solutions.
+Below is a system that has a small Pythagorean triple as a solution.
 
 ```python
-from satisfier import system
-C = system.ConstraintSystem()
+from satisfier.system import ConstraintSystem
+from satisfier.enumerative import search
+
+C = ConstraintSystem()
 x = C.variable_set
 
 C.add_constraints([
@@ -33,8 +35,29 @@ C.add_constraints([
 ])
 
 for variable in C.variables:
-    C.set_domain(variable, range(1, 20))
+    C.set_domain(variable, range(1, 6))
 
-for solution in all_solutions(C):
-    print(solution)
+search(C)
+```
+
+Satisfier can be used to enumerate combinatorial structures.
+A *derangement* is a permutation that has no fixed points.
+We can count the derangements of the `n` symbols `0, 1, ..., n - 1` with `n = 10` as follows.
+```python
+from satisfier.system import ConstraintSystem
+from satisfier.enumerative import solutions
+
+C = ConstraintSystem()
+position = C.variable_set
+
+n = 10
+for i in range(n):
+    C.set_domain(position[i], range(n))
+
+for i in range(n):
+    C.add_constraint(position[i] != i)
+
+C.all_different(C.variables)
+
+sum(1 for _ in solutions(C))
 ```
