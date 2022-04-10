@@ -2,7 +2,15 @@
 
 
 # Satisfier
-Finds solutions for finite domain Constraint Satisfaction Problems.
+Satisfier is a package for finding solutions to Constraint Satisfaction Problems (CSPs), supporting variables over finite domains, with a flexible set of constraints.
+The packages includes enumerative methods that explore the entire search space of a problem, as well as a variety of heuristic methods to search for solutions to larger problem instances.
+
+Satisfier can be used for a variety of mathematical tasks.
+* Enumerating solutions to equations or systems of equations
+* Searching for solutions to CSPs, or proving that no solutions exist
+* Constructing combinatorial structures
+* Graph coloring
+* Many more!
 
 ### Installation
 
