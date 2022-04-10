@@ -1,6 +1,7 @@
 # Makefile for satisfier
 
 SHELL := /bin/bash
+HIDE ?= @
 VENV ?= env
 BIN_DIR ?= $(VENV)/bin
 
@@ -14,6 +15,6 @@ MODULE ?= satisfier
 
 .PHONY: test
 test:
-	$(PYTHON) -m pytest -v
-	$(FLAKE8) $(MODULE)
-	$(MYPY) $(MODULE)
+	$(HIDE)$(PYTHON) -m pytest -v
+	$(HIDE)$(FLAKE8) $(MODULE)
+	$(HIDE)$(MYPY) $(MODULE)

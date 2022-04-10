@@ -11,6 +11,40 @@ Domain = Dict[Variable, Set[Any]]
 Assignment = Dict[Variable, Any]
 
 
+def greedy(system: ConstraintSystem, penalty_func='error'):
+    # Initialize with random assignment
+    for variable in system.variables:
+        variable.value = random.choice(sorted(system.domain[variable]))
+
+    cost = sum(
+        constraint.penalty(method=penalty_func)
+        for constraint in system.constraints if not constraint.is_satisfied()
+    )
+
+    best_cost = cost
+    print("initial cost:", cost)
+
+    for variable in system.variables:
+        cost_map = defaultdict(list)
+
+        for value in system.domain[variable]:
+            variable.value = value
+            cost = sum(
+                constraint.penalty(method=penalty_func)
+                for constraint in system.constraints if not constraint.is_satisfied()
+            )
+            print(f"{variable} = {value} cost: {cost}")
+            cost_map[cost].append(value)
+
+        print(cost_map)
+        best_cost = min(cost_map)
+        print("best_cost", best_cost)
+        variable.value = random.choice(cost_map[best_cost])
+
+    best_assignment = system.variable_set.values_dict()
+    return best_cost, best_assignment
+
+
 def tabu(system: ConstraintSystem,
          max_iterations=1000,
          penalty_func='error',

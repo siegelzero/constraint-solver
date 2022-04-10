@@ -1,4 +1,4 @@
 # flake8: noqa
 from .heuristics import tabu
-from .solutions import all_solutions
+from .enumerative import search, solutions
 from .system import ConstraintSystem

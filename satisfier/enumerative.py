@@ -10,7 +10,7 @@ Domain = Dict[Variable, Set[Any]]
 Assignment = Dict[Variable, Any]
 
 
-def all_solutions(system: ConstraintSystem) -> Iterator[Assignment]:
+def solutions(system: ConstraintSystem) -> Iterator[Assignment]:
     """Yields all solutions to the given constraint system.
 
     Implements backtracking with domain reduction to find all solutions to the
@@ -118,5 +118,6 @@ def all_solutions(system: ConstraintSystem) -> Iterator[Assignment]:
     )
 
 
-def find_solution(system: ConstraintSystem) -> Assignment:
-    return next(all_solutions(system))
+def search(system: ConstraintSystem) -> Assignment:
+    """Search for a solution to the given constraint system."""
+    return next(solutions(system))
