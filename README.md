@@ -42,7 +42,7 @@ search(C)
 
 Satisfier can be used to enumerate combinatorial structures.
 A *derangement* is a permutation that has no fixed points.
-We can enumerate the `44` derangements of the `5` symbols `0, 1, 2, 3, 4` as follows.
+We can enumerate the `44` derangements of the `5` symbols `0, 1, 2, 3, 4` as follows, using the `all_different` constraint to ensure that all variable values are distinct.
 ```python
 from satisfier.system import ConstraintSystem
 from satisfier.enumerative import solutions
