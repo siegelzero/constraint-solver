@@ -41,7 +41,7 @@ search(C)
 ```
 
 Satisfier can be used to enumerate combinatorial structures.
-A *derangement* is a permutation that has no fixed points.
+For example, a *derangement* is a permutation that has no fixed points.
 We can enumerate the `44` derangements of the `5` symbols `0, 1, 2, 3, 4` as follows, using the `all_different` constraint to ensure that all variable values are distinct.
 ```python
 from satisfier.system import ConstraintSystem
@@ -60,4 +60,34 @@ for i in range(n):
 C.all_different(C.variables)
 
 assert sum(1 for _ in solutions(C)) == 44
+```
+
+We can look at Latin Squares for a more complicated example.
+A `3x3` Latin Square can be modeled as an array of `9` entries, with each entry in `{0, 1, 2}`, with the property that each entry appears exactly once in each row and exactly once in each column.
+```python
+from satisfier.system import ConstraintSystem
+from satisfier.enumerative import search
+
+
+C = ConstraintSystem()
+x = C.variable_set
+
+n = 3
+
+# Each row has distinct elements
+C.all_different([x[0], x[1], x[2]])
+C.all_different([x[3], x[4], x[5]])
+C.all_different([x[6], x[7], x[8]])
+
+# Each column has distinct elements
+C.all_different([x[0], x[3], x[6]])
+C.all_different([x[1], x[4], x[7]])
+C.all_different([x[2], x[5], x[8]])
+
+# Set domain for each variable
+for v in C.variables:
+    C.set_domain(v, range(n))
+
+solution = search(C)
+print('\n'.join(wrap(''.join(map(str, solution.values())), n)))
 ```
